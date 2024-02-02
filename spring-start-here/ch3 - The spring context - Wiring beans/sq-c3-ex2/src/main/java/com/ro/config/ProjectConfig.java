@@ -1,7 +1,7 @@
-package org.example.config;
+package com.ro.config;
 
-import org.example.model.Parrot;
-import org.example.model.Person;
+import com.ro.model.Parrot;
+import com.ro.model.Person;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

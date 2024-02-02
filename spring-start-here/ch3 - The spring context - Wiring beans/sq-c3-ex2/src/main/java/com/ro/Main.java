@@ -1,8 +1,8 @@
-package org.example;
+package com.ro;
 
-import org.example.config.ProjectConfig;
-import org.example.model.Parrot;
-import org.example.model.Person;
+import com.ro.config.ProjectConfig;
+import com.ro.model.Parrot;
+import com.ro.model.Person;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {

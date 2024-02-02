@@ -1,4 +1,4 @@
-package org.example.model;
+package com.ro.model;
 
 public class Parrot {
     private String name;
