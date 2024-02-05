@@ -12,6 +12,10 @@
         <module>sq-c3-ex2</module>
         <module>sq-c3-ex3</module>
         <module>sq-c3-ex4</module>
+        <module>sq-c3-ex5</module>
+        <module>sq-c3-ex6</module>
+        <module>sq-c3-ex8</module>
+        <module>sq-c3-ex9</module>
     </modules>
 
     <properties>

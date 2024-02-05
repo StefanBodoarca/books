@@ -1,6 +1,6 @@
 ## Chapter 3 The Spring Context: Wiring beans
 
-### 3.1. Implementing relationships among beans defined in the configuration file
+### 3.1 Implementing relationships among beans defined in the configuration file
 
 Here we discuss two ways you can establish the relationships among beans:
 - Link the beans by directly calling the methods that create them (which we’ll
@@ -51,7 +51,7 @@ IoC implies that the framework controls the application at execution.
 
 Check the code on [ProjectConfig](sq-c3-ex3/src/main/java/com/ro/config/ProjectConfig.java) and [Main class](sq-c3-ex3/src/main/java/com/ro/Main.java).
 
-### 3.2. Using the @Autowired annotation to inject beans
+### 3.2 Using the @Autowired annotation to inject beans
 
 There are three ways we can use the @Autowired annotation:
 - Injecting the value in the field of the class, which you usually find in examples
@@ -73,10 +73,60 @@ For knowing why this method is not generally recommended I propose reading [Why 
 - Design problems: Single Responsibility Principle and Circular Dependencies
 - Testing problems: Injecting mocks by reflection
 
-### 3.2.1 Using the @Autowired to inject the values through the constructor
+### 3.2.2 Using the @Autowired to inject the values through the constructor
 
 - This approach is the one used most often in production code.
 - It enables you to define the fields as final, ensuring no one can change their value after Spring initializes them.
 - The possibility to set the values when calling the constructor also helps you when writing specific unit tests where you don’t want to rely
   on Spring making the field injection for you.
+
+<img src="images/constructor_injection.png" width="600" height="400" alt="">
+
+Check the code on [sq-c3-ex5](sq-c3-ex5/src/main/java/com/ro)
+
+**NOTE** Starting with Spring version 4.3, when you only have one constructor
+in the class, you can omit writing the _@Autowired_ annotation.
+
+### 3.2.3 Using dependency injection through the setter
+
+This approach has more disadvantages than advantages: 
+- it’s more challenging to read
+- it doesn’t allow you to make the field final
+- it doesn’t help you in making the testing easier
+
+Check the code on [sq-c3-ex6](sq-c3-ex6/src/main/java/com/ro)
+
+```java
+@Component
+public class Person {
+    private String name = "Ella";
+
+    private Parrot parrot;
+
+    @Autowired
+    public void setParrot(Parrot parrot) {
+        this.parrot = parrot;
+    }
+}
+```
+
+### 3.3 Dealing with circular dependencies
+
+<img src="images/circular_dependencies.png" width="600" height="400" alt="">
+
+A circular dependency is easy to avoid. You just need to make sure you don’t define
+objects whose creation depends on the other.
+
+### 3.4 Choosing from multiple beans in the Spring context
+
+Depending on your implementation, you have the following cases:
+
+The identifier of the parameter doesn’t match any of the bean names from the
+context. Then you have the following options:
+   - You marked one of the beans as primary (_@Primary_). In this case, Spring will select the primary bean
+   for injection.
+   - You can explicitly select a specific bean using _@Qualifier_ ([sq-c3-ex8 ProjectConfig class](sq-c3-ex8/src/main/java/com/ro/config/ProjectConfig.java) or [sq-c3-ex9 Person class](sq-c3-ex9/src/main/java/com/ro/model/Person.java)).
+   - If none of the beans is primary and you don’t use _@Qualifier_, the app will
+   fail with an exception, complaining that the context contains more beans of
+   the same type and Spring doesn’t know which one to choose.
 
