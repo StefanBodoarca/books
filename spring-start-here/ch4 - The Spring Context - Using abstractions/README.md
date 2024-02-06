@@ -1,5 +1,11 @@
 ## Chapter 4 The Spring Context: Using abstractions
 
+### Table of contents
+- [Using interfaces to define contracts](#41-using-interfaces-to-define-contracts)
+- [Using dependency injection with abstractions](#42-using-dependency-injection-with-abstractions)
+  - [Deciding which objects should be part of the Spring context](#421-deciding-which-objects-should-be-part-of-the-spring-context)
+  - [Choosing what to auto-wire from multiple implementations of an abstraction](#422-choosing-what-to-auto-wire-from-multiple-implementations-of-an-abstraction)
+- [Focusing on object responsibilities with stereotype annotations](#43-focusing-on-object-responsibilities-with-stereotype-annotations)
 ### 4.1 Using interfaces to define contracts
 
 <img src="images/plain_java_app_design.png" width="600" height="500" alt="">

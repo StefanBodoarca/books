@@ -1,5 +1,10 @@
 ## Chapter 5 The Spring Context: Bean scopes and life cycle
 
+### Table of contents
+- [Using the singleton bean scope](#51-using-the-singleton-bean-scope)
+  - [How singleton beans work](#511-how-singleton-beans-work)
+  - [Singleton beans in real-world scenarios](#512-singleton-beans-in-real-world-scenarios)
+  - [Using eager and lazy instantiation](#513-using-eager-and-lazy-instantiation)
 Spring has multiple different approaches for creating beans and managing their
 life cycle, and in the Spring world we name these approaches _scopes_. In this chapter, we
 discuss two scopes you’ll often find in Spring apps: _singleton_ and _prototype_.

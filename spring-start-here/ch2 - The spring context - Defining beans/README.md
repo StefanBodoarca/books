@@ -1,5 +1,11 @@
 ## Chapter 2 The Spring Context: Defining beans
 
+### Table of contents
+- [Using the @Bean annotation to add beans into the Spring context](#221-using-the-bean-annotation-to-add-beans-into-the-spring-context)
+- [Using stereotype annotations to add beans into the Spring context](#222-using-stereotype-annotations-to-add-beans-to-the-spring-context)
+- [Programmatically adding beans to the Spring context](#223-programmatically-adding-beans-to-the-spring-context)
+
+
 You can add beans in the context in the following ways:
 - Using the @Bean annotation
 - Using stereotype annotations

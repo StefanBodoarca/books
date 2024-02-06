@@ -1,5 +1,16 @@
 ## Chapter 3 The Spring Context: Wiring beans
 
+### Table of contents
+- [Implementing relationships among beans defined in the configuration file](#31-implementing-relationships-among-beans-defined-in-the-configuration-file)
+  - [Wiring the beans using a direct method call between the @Bean methods](#311-wiring-the-beans-using-a-direct-method-call-between-the-bean-methods)
+  - [Wiring the beans using the @Bean annotated method's parameters](#312-wiring-the-beans-using-the-bean-annotated-methods-parameters)
+- [Using the @Autowired annotation to inject beans](#32-using-the-autowired-annotation-to-inject-beans)
+  - [Using @Autowired to inject the values through the class fields](#321-using-autowired-to-inject-the-values-through-the-class-fields)
+  - [Using the @Autowired to inject the values through the constructor](#322-using-the-autowired-to-inject-the-values-through-the-constructor)
+  - [Using dependency injection through the setter](#323-using-dependency-injection-through-the-setter)
+- [Dealing with circular dependencies](#33-dealing-with-circular-dependencies)
+- [Choosing from multiple beans in the Spring context](#34-choosing-from-multiple-beans-in-the-spring-context)
+
 ### 3.1 Implementing relationships among beans defined in the configuration file
 
 Here we discuss two ways you can establish the relationships among beans:
@@ -37,7 +48,7 @@ Parrot{name='Koko'}
 
 <img src="images/Spring_logic.png" width="600" height="400" alt="">
 
-### 3.1.1 Wiring the beans using the @Bean annotated method's parameters
+### 3.1.2 Wiring the beans using the @Bean annotated method's parameters
 
 <img src="images/wire_with_method_parameter.png" width="600" height="400" alt="">
 
