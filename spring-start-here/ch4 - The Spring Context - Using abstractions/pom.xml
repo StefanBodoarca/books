@@ -11,6 +11,9 @@
     <modules>
         <module>sq-c4-ex1</module>
         <module>sq-c4-ex2</module>
+        <module>sq-c4-ex3</module>
+        <module>sq-c4-ex4</module>
+        <module>sq-c4-ex5</module>
     </modules>
 
     <properties>
