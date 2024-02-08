@@ -59,3 +59,53 @@ only if it’s immutable. Avoid designing mutable singleton beans.
 
 ### 5.1.3 Using eager and lazy instantiation
 
+Spring creates all singleton beans **when it initializes the context**. This is
+Spring’s default behavior, which is also called _eager instantiation_ (this is what we used so far).
+
+With _lazy instantiation_, Spring doesn’t create the singleton instances when it creates the context. Instead, it creates
+each instance the first time someone refers to the bean.
+
+```java
+@Service
+@Lazy //this bean will be created when it's first referred, not when the context is created
+public class CommentService {
+  public CommentService() {
+    System.out.println("CommentService instance created!");
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    var c = new AnnotationConfigApplicationContext(ProjectConfig.class);
+    System.out.println("Before retrieving the CommentService");
+
+    /*
+      At this line, where Spring needs to provide a reference 
+      to the CommentService bean, Spring also creates the instance
+    */
+    var service = c.getBean(CommentService.class); 
+    System.out.println("After retrieving the CommentService");
+  }
+}
+
+    /*
+      The output looks like this:
+      Before retrieving the CommentService
+      CommentService instance created!
+      After retrieving the CommentService
+    */
+```
+
+When should you use _eager_ instantiation and when should you use _lazy_?
+
+**Eager**:
+- **Comfortable approach**: when one instance delegates to another, the 2nd bean already exists in any situation.
+- **Safer than lazy**: we can observe when starting the app if something is wrong with the creation of a bean.
+- Used as a **default approach**.
+
+**Lazy**:
+- The framework checks if the bean exists and eventually create it. _Eager_ spares these checks, so the performance is better when the framework needs to delegate actions.
+- An issue with a bean will be observed only when the app is already executing and it reaches the point that the bean needs to be created.
+- Used for example on a monolithic app that has multiple parts not used by a client, so instantiating all the beans would unnecessarily occupy a lot of memory. In this case the beans can be lazily instantiated so that the app would create only the necessary instances.
+
+### 5.1 Using the prototype bean scope
