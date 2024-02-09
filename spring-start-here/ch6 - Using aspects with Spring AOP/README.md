@@ -32,3 +32,15 @@ to manage the objects for which you want to apply aspects.
 
 <img src="images/aspects_terminology.png" width="600" height="600" alt="">\
 (Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
+
+But how does Spring intercept each method call and apply the aspect logic?
+
+Spring **won’t directly give you an instance reference for the bean** when you request it from the context. Instead, **Spring
+gives you an object that calls the aspect logic** instead of the actual method. We say that
+**Spring gives you a _proxy_ object** instead of the real bean. You will now receive the proxy
+instead of the bean anytime you get the bean from the context, either if you directly
+use the _getBean()_ method of the context or if you use DI. This approach is named _weaving_. So, when we define an aspect for a method,
+the call goes through the _proxy object_. The _proxy object_ applies the logic defined by the aspect and then delegates the call to the real method.
+
+### 6.2 Implementing aspects with Spring AOP
+
