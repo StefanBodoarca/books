@@ -5,7 +5,10 @@
   - [How singleton beans work](#511-how-singleton-beans-work)
   - [Singleton beans in real-world scenarios](#512-singleton-beans-in-real-world-scenarios)
   - [Using eager and lazy instantiation](#513-using-eager-and-lazy-instantiation)
-  
+- [Using the prototype bean scope](#52-using-the-prototype-bean-scope)
+  - [How prototype beans work](#521-how-prototype-beans-work)
+  - [Prototype beans in real-world scenarios](#522-prototype-beans-in-real-world-scenarios)
+  - [A quick comparison between singleton and prototype bean scopes](#table-51-a-quick-comparison-between-singleton-and-prototype-bean-scopes)
 
 Spring has multiple different approaches for creating beans and managing their
 life cycle, and in the Spring world we name these approaches _scopes_. In this chapter, we
@@ -108,4 +111,67 @@ When should you use _eager_ instantiation and when should you use _lazy_?
 - An issue with a bean will be observed only when the app is already executing and it reaches the point that the bean needs to be created.
 - Used for example on a monolithic app that has multiple parts not used by a client, so instantiating all the beans would unnecessarily occupy a lot of memory. In this case the beans can be lazily instantiated so that the app would create only the necessary instances.
 
-### 5.1 Using the prototype bean scope
+### 5.2 Using the prototype bean scope
+
+### 5.2.1 How prototype beans work
+
+The idea is straightforward: Every time you request a reference to a prototype-scoped bean, Spring creates a new object
+instance.\
+
+Check the code on [sq-c5-ex3](sq-c5-ex3/src/main/java/com/ro) and see how Spring created different instances of CommentService on _getBean()_.
+
+With prototype beans we no longer have concurrency problems because each thread that requests the bean gets a different instance, so defining mutable prototype beans is not a problem.
+
+### 5.2.2 Prototype beans in real-world scenarios
+
+These type of beans are mostly used when you need mutating objects.
+
+Let's look at the following example:\
+<img src="images/commentprocessor_example.png" width="600" height="200" alt="">
+
+The _CommentProcessor_ object stores the comment to be processed as an attribute, and its methods change this attribute.
+
+<img src="images/commentprocessor_needs_commentrepository.png" width="600" height="300" alt="">
+
+In this case the _CommentProcessor_ it's a prototype-scoped bean.
+
+**NOTE** Don’t make the mistake of injecting the _CommentProcessor_ directly in the _CommentService_ bean. The _CommentService_ bean is a singleton, which means that Spring creates
+only an instance of this class. As a consequence, Spring will also inject the
+dependencies of this class just once when it creates the CommentService bean itself. In
+this case, you’ll end up with only an instance of the _CommentProcessor_. Each call of
+the _sendComment()_ method will use this unique instance, so with multiple threads
+you’ll run into the same race condition issues as with a singleton bean.
+
+For our case, the _CommentProcessor_ bean was retrieved from the context on every _sendComment()_ call by using an injected _ApplicationContext_.
+
+```java
+@Service
+public class CommentService {
+
+    @Autowired
+    private ApplicationContext context;
+
+    public void sendComment(Comment comment) {
+        System.out.println("Context in commentService: " + context);
+        CommentProcessor commentProcessor = context.getBean(CommentProcessor.class);
+
+        commentProcessor.setComment(comment);
+        commentProcessor.processComment();
+        commentProcessor.validateComment();
+        commentProcessor.sendComment();
+    }
+    //...
+}
+```
+Check the code on [sq-c5-ex4](sq-c5-ex4/src/main/java/com/ro).
+
+
+### Table 5.1 A quick comparison between singleton and prototype bean scopes
+
+| Singleton                                                                                           | Prototype                                                                                             |
+|-----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| The framework associates a name with an actual object instance.                                     | A name is associated with a type.                                                                     |
+| Every time you refer to a bean name you’ll get the same object instance.                            | Every time you refer to a bean name, you get a new instance.                                          |
+| You can configure Spring to create the instances when the context is loaded or when first referred. | The framework always creates the object instances for the prototype scope when you refer to the bean. |
+| Singleton is the default bean scope in Spring.                                                      | You need to explicitly mark a bean as a prototype.                                                    |
+| It’s not recommended that a singleton bean to have mutable attributes.                              | A prototype bean can have mutable attributes.                                                         |
