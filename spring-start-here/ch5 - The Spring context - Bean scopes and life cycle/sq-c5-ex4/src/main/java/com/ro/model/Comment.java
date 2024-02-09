@@ -1,11 +1,11 @@
 package com.ro.model;
 
 public class Comment {
-    private final String comment;
+    private final String text;
     private int numberOfCharacters;
 
-    public Comment(String comment) {
-        this.comment = comment;
+    public Comment(String text) {
+        this.text = text;
     }
     private boolean valid = false;
     private boolean processed = false;
@@ -26,8 +26,8 @@ public class Comment {
         this.processed = processed;
     }
 
-    public String getComment() {
-        return comment;
+    public String getText() {
+        return text;
     }
 
     public int getNumberOfCharacters() {
@@ -41,7 +41,7 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "comment='" + comment + '\'' +
+                "text='" + text + '\'' +
                 '}';
     }
 }

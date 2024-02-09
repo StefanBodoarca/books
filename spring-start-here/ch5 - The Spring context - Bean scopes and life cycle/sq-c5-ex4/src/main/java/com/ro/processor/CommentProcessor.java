@@ -34,7 +34,7 @@ public class CommentProcessor {
     public void validateComment() {
         System.out.println("Validating the comment: " + comment);
 
-        comment.setValid(comment.getComment().length() > 2);
+        comment.setValid(comment.getText().length() > 2);
     }
 
     public void sendComment() {
