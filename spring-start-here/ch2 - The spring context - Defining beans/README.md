@@ -13,7 +13,8 @@ You can add beans in the context in the following ways:
 
 ### 2.2.1 Using the @Bean annotation to add beans into the Spring context
 
-<img src="images/inject_bean__with_annotation_steps.png" width="600" height="400" alt="">
+<img src="images/inject_bean__with_annotation_steps.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 <b>NOTE</b>: A configuration class is a special class in Spring applications that we use
 to instruct Spring to do specific actions. For example, we can tell Spring to create
@@ -23,7 +24,8 @@ beans or to enable certain functionalities.
 becomes the bean’s name (as in Figure 2.9, the bean’s name is now “parrot”). By convention, you can use nouns, and most often they have the same name as the class.
 
 ##### How to add more beans of the same type?
-<img src="images/add_more_beans_of_the_same_type.png" width="600" height="400" alt="">
+<img src="images/add_more_beans_of_the_same_type.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Also you can change the name of a bean like this:
 - @Bean(name = "miki")
@@ -58,7 +60,8 @@ creates an instance of the class you marked as a component and adds that instanc
 its context. We’ll still have a configuration class when we use this approach to tell
 Spring where to look for the classes annotated with stereotype annotations.
 
-<img src="images/add_bean_stereotype_annotation.png" width="600" height="400" alt="">
+<img src="images/add_bean_stereotype_annotation.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Check [sq-c2-ex6](sq-c2-ex6/src/main/java/com/ro) to see the code.
 
@@ -96,7 +99,8 @@ Check [sq-c2-ex6/Main class](sq-c2-ex6/src/main/java/com/ro/Main.java) to see th
 - starting with Spring 5
 - it enables you to add new instances in the context directly by calling a method of the context instance.
 
-<img src="images/use_register_bean_method.png" width="600" height="400" alt="">
+<img src="images/use_register_bean_method.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 ```java
 <T> void registerBean(

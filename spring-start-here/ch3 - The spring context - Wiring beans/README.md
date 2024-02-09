@@ -19,9 +19,11 @@ call _wiring_).
 - Enable Spring to provide us a value using a method parameter (which we’ll call
 _auto-wiring_).
 
-<img src="images/establishing_a_relationship_between_2_beans.png" width="600" height="400" alt="">
+<img src="images/establishing_a_relationship_between_2_beans.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
-<img src="images/has_a_realtionship.png" width="600" height="250" alt="">
+<img src="images/has_a_realtionship.png" width="600" height="250" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 ### 3.1.1 Wiring the beans using a direct method call between the @Bean methods
 
@@ -44,13 +46,16 @@ Person{name='Ella', parrot=Parrot{name='Koko'}}
 Parrot{name='Koko'}
 ```
 
-<img src="images/logic_of_calls.png" width="600" height="400" alt="">
+<img src="images/logic_of_calls.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
-<img src="images/Spring_logic.png" width="600" height="400" alt="">
+<img src="images/Spring_logic.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 ### 3.1.2 Wiring the beans using the @Bean annotated method's parameters
 
-<img src="images/wire_with_method_parameter.png" width="600" height="400" alt="">
+<img src="images/wire_with_method_parameter.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Here DI (dependency injection) is used. As its name suggests, DI is a technique involving
 the framework setting a value into a specific field or parameter. In our case, Spring
@@ -58,7 +63,8 @@ sets a particular value into the parameter of the **person()** method when calli
 resolves a dependency of this method. DI is an application of the IoC principle, and
 IoC implies that the framework controls the application at execution.
 
-<img src="images/di_explanation.png" width="600" height="400" alt="">
+<img src="images/di_explanation.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Check the code on [ProjectConfig](sq-c3-ex3/src/main/java/com/ro/config/ProjectConfig.java) and [Main class](sq-c3-ex3/src/main/java/com/ro/Main.java).
 
@@ -74,7 +80,8 @@ code
 
 ### 3.2.1 Using @Autowired to inject the values through the class fields
 
-<img src="images/autowired_over_field.png" width="600" height="400" alt="">
+<img src="images/autowired_over_field.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Check the code on [sq-c3-ex4](sq-c3-ex4/src/main/java/com/ro)
 
@@ -91,7 +98,8 @@ For knowing why this method is not generally recommended I propose reading [Why 
 - The possibility to set the values when calling the constructor also helps you when writing specific unit tests where you don’t want to rely
   on Spring making the field injection for you.
 
-<img src="images/constructor_injection.png" width="600" height="400" alt="">
+<img src="images/constructor_injection.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Check the code on [sq-c3-ex5](sq-c3-ex5/src/main/java/com/ro)
 
@@ -123,7 +131,8 @@ public class Person {
 
 ### 3.3 Dealing with circular dependencies
 
-<img src="images/circular_dependencies.png" width="600" height="400" alt="">
+<img src="images/circular_dependencies.png" width="600" height="400" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 A circular dependency is easy to avoid. You just need to make sure you don’t define
 objects whose creation depends on the other.

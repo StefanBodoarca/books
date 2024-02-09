@@ -21,7 +21,8 @@ in its context. It is also the bean scope you’ll most encounter in production 
 
 ### 5.1.1 How singleton beans work
 
-<img src="images/singleton_pattern_vs_scope.png" width="700" height="800" alt="">
+<img src="images/singleton_pattern_vs_scope.png" width="700" height="800" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 **Declaring single-scoped bean with _@Bean_**
 
@@ -32,7 +33,8 @@ Check the code on [ProjectConfig](sq-c5-ex1/src/main/java/com/ro/config/ProjectC
 Spring’s behavior for singleton beans isn’t any different when
 using stereotype annotations than when you declared them with the @Bean annotation.
 
-<img src="images/class_design_singleton_stereotype.png" width="500" height="500" alt="">
+<img src="images/class_design_singleton_stereotype.png" width="500" height="500" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 Check the code on [sq-c5-ex2](sq-c5-ex2/src/main/java/com/ro) and see how Spring injected the same instance of CommentRepository on both services.
 
@@ -128,11 +130,13 @@ These type of beans are mostly used when you need mutating objects.
 
 Let's look at the following example:
 
-<img src="images/commentprocessor_example.png" width="600" height="200" alt="">
+<img src="images/commentprocessor_example.png" width="600" height="200" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 The _CommentProcessor_ object stores the comment to be processed as an attribute, and its methods change this attribute.
 
-<img src="images/commentprocessor_needs_commentrepository.png" width="600" height="300" alt="">
+<img src="images/commentprocessor_needs_commentrepository.png" width="600" height="300" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
 In this case the _CommentProcessor_ it's a prototype-scoped bean.
 
