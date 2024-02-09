@@ -116,7 +116,7 @@ When should you use _eager_ instantiation and when should you use _lazy_?
 ### 5.2.1 How prototype beans work
 
 The idea is straightforward: Every time you request a reference to a prototype-scoped bean, Spring creates a new object
-instance.\
+instance.
 
 Check the code on [sq-c5-ex3](sq-c5-ex3/src/main/java/com/ro) and see how Spring created different instances of CommentService on _getBean()_.
 
@@ -126,7 +126,8 @@ With prototype beans we no longer have concurrency problems because each thread 
 
 These type of beans are mostly used when you need mutating objects.
 
-Let's look at the following example:\
+Let's look at the following example:
+
 <img src="images/commentprocessor_example.png" width="600" height="200" alt="">
 
 The _CommentProcessor_ object stores the comment to be processed as an attribute, and its methods change this attribute.
