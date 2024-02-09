@@ -1,5 +1,7 @@
 ## Spring Start Here - Notes
 
+![Spring Start Here](images/spring-start-here.png)
+
 ### Overview
 
 These notes have been compiled from the book [Spring Start Here](https://www.manning.com/books/spring-start-here) written by Laurentiu Spilca. The purpose of these notes is to provide a concise and organized summary of key concepts, tips, and insights covered in the book. If you're looking to quickly grasp essential information about Spring and its fundamentals, this compilation aims to serve as a helpful resource.
