@@ -197,5 +197,6 @@ based on the annotation’s purpose (for example, for @Before, the intercepted m
 call will always happen after the aspect logic execution).
 
 Let's look at an example with _@AfterReturning_:
+
 <img src="images/after_returning_example.png" width="650" height="300" alt="">\
 (Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
