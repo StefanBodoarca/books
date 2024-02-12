@@ -203,4 +203,31 @@ Let's look at an example with _@AfterReturning_:
 
 ### 6.3 The aspect execution chain
 
+In a real-world app, a method is often intercepted by more than one aspect. For example, we have a method for which we want to log the execution and apply
+some security constraints.
+- In which order does Spring execute these aspects?
+- Does the execution order matter?
 
+So we have:
+- **SecurityAspect**: applies the security restrictions. This aspect intercepts the
+method, validates the call, and in some conditions doesn’t forward the call to
+the intercepted method. 
+- **LoggingAspect**: logs the beginning and end of the intercepted method
+execution.
+
+**NOTE** When you have multiple aspects weaved to the same method, they need to execute one
+after another.
+
+For our case the logic goes like this:
+<img src="images/aspects_order.png" width="700" height="600" alt="">\
+(Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
+
+**NOTE** By default, Spring doesn’t guarantee the order in which two aspects in the
+same execution chain are called. If the execution order is not relevant, then you just
+need to define the aspects and leave the framework to execute them in whatever
+order. If you need to define the aspects’ execution order, you can use the _@Order_ annotation. This annotation receives an ordinal (a number) representing the order in
+the execution chain for a specific aspect. The smaller the number, the earlier that
+aspect executes. If two values are the same, the order of execution is again not
+defined.
+
+Check the code with the _@Order_ annotation on [sq-c6-ex5](sq-c6-ex5/src/main/java/com/ro/aspects).
