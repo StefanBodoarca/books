@@ -1,5 +1,14 @@
 ## Chapter 6 Using aspects with Spring AOP
 
+### Table of contents
+- [How aspects work in Spring](#61-how-aspects-work-in-spring)
+- [Implementing aspects with Spring AOP](#62-implementing-aspects-with-spring-aop)
+  - [Implementing a simple aspect](#621-implementing-a-simple-aspect)
+  - [Altering the intercepted method's parameters and the returned value](#622-altering-the-intercepted-methods-parameters-and-the-returned-value)
+  - [Intercepting annotated methods](#623-intercepting-annotated-methods)
+  - [Other advice annotations you can use](#624-other-advice-annotations-you-can-use)
+- [The aspect execution chain](#63-the-aspect-execution-chain)
+
 Aspects are **a way the framework intercepts method calls and possibly alters the execution
 of methods**. You can affect the execution of specific method calls you select.
 This technique **helps you extract part of the logic belonging to the executing method**.
