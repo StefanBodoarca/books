@@ -1,5 +1,13 @@
 ## Chapter 7 Understanding Spring Boot and Spring MVC
 
+### Table of contents
+- [Different fashions of implementing a web app with Spring](#712-different-fashions-of-implementing-a-web-app-with-spring)
+- [Using a servlet container in web app development](#713-using-a-servlet-container-in-web-app-development)
+- [The magic of Spring Boot](#72-the-magic-of-spring-boot)
+  - [Using dependency starters to simplify the dependency management](#722-using-dependency-starters-to-simplify-the-dependency-management)
+  - [Using autoconfiguration by convention based on dependencies](#723-using-autoconfiguration-by-convention-based-on-dependencies)
+- [Implementing a web app with Spring MVC](#73-implementing-a-web-app-with-spring-mvc)
+
 ### 7.1.2 Different fashions of implementing a web app with Spring
 
 We classify the approaches of creating a web app as the following:
