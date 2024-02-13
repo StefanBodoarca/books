@@ -13,6 +13,8 @@ These notes have been compiled from the book [Spring Start Here](https://www.man
 - [Chapter 4 The Spring Context: Using abstractions](ch4%20-%20The%20Spring%20Context%20-%20Using%20abstractions/README.md)
 - [Chapter 5 The Spring Context: Bean scopes and life cycle](ch5%20-%20The%20Spring%20context%20-%20Bean%20scopes%20and%20life%20cycle/README.md)
 - [Chapter 6 Using aspects with Spring AOP](ch6%20-%20Using%20aspects%20with%20Spring%20AOP)
+- [Chapter 7 Understanding Spring Boot and Spring MVC](ch7%20-%20Understanding%20Spring%20Boot%20and%20Spring%20MVC)
+- [Chapter 8 Implementing web apps with Spring Boot and Spring MVC](ch8%20-%20Implementing%20web%20apps%20with%20Spring%20Boot%20and%20Spring%20MVC)
 
 For more in-depth understanding and detailed explanations, refer to the [Spring Start Here](https://www.manning.com/books/spring-start-here) book by Laurentiu Spilca. This compilation is meant to complement the book and should be used in conjunction with it for a comprehensive learning experience.
 

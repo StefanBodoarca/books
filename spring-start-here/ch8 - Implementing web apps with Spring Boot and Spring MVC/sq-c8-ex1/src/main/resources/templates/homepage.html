@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--This definition is equivalent to an
+import in Java. It allows us further to use the prefix “th” to refer to specific features
+provided by Thymeleaf in the view.-->
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome <span th:style="'color: ' + ${color}" th:text="${username}"></span></h1> <!--uses the th prefix to use the values sent by the controller-->
+</body>
+</html>
