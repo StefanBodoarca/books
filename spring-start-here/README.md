@@ -16,6 +16,7 @@ These notes have been compiled from the book [Spring Start Here](https://www.man
 - [Chapter 7 Understanding Spring Boot and Spring MVC](ch7%20-%20Understanding%20Spring%20Boot%20and%20Spring%20MVC)
 - [Chapter 8 Implementing web apps with Spring Boot and Spring MVC](ch8%20-%20Implementing%20web%20apps%20with%20Spring%20Boot%20and%20Spring%20MVC)
 - [Chapter 9 Using the Spring web scopes](ch9%20-%20Using%20the%20Spring%20web%20scopes)
+- [Chapter 10 Implementing REST services](ch10%20-%20Implementing%20REST%20services)
 
 For more in-depth understanding and detailed explanations, refer to the [Spring Start Here](https://www.manning.com/books/spring-start-here) book by Laurentiu Spilca. This compilation is meant to complement the book and should be used in conjunction with it for a comprehensive learning experience.
 
