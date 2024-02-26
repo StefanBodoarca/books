@@ -1,0 +1,5 @@
+custom:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_start_here_testdb?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: test
