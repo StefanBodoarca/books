@@ -20,6 +20,7 @@ These notes have been compiled from the book [Spring Start Here](https://www.man
 - [Chapter 11 Consuming REST endpoints](ch11%20-%20Consuming%20REST%20endpoints)
 - [Chapter 12 Using data sources in Spring apps](ch12%20-%20Using%20data%20sources%20in%20Spring%20apps)
 - [Chapter 13 Using transactions in Spring apps](ch13%20-%20Using%20transations%20in%20Spring%20apps)
+- [Chapter 14 Implementing data persistence with Spring Data](ch14%20-%20Implementing%20data%20persistence%20with%20Spring%20Data)
 
 For more in-depth understanding and detailed explanations, refer to the [Spring Start Here](https://www.manning.com/books/spring-start-here) book by Laurentiu Spilca. This compilation is meant to complement the book and should be used in conjunction with it for a comprehensive learning experience.
 
