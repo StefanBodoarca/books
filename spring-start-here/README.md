@@ -23,6 +23,7 @@ These notes have been compiled from the book [Spring Start Here](https://www.man
 - [Chapter 14 Implementing data persistence with Spring Data](ch14%20-%20Implementing%20data%20persistence%20with%20Spring%20Data)
 - [Chapter 15 Testing your Spring app](ch15%20-%20Testing%20your%20Spring%20app)
 - [appendix A - Architectural approaches](appendix%20A%20-%20Architectural%20approaches)
+- [appendix C - A quick introduction to HTTP](appendix%20C%20-%20A%20quick%20introduction%20to%20HTTP)
 
 For more in-depth understanding and detailed explanations, refer to the [Spring Start Here](https://www.manning.com/books/spring-start-here) book by Laurentiu Spilca. This compilation is meant to complement the book and should be used in conjunction with it for a comprehensive learning experience.
 
