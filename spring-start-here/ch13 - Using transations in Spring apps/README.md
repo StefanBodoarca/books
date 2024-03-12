@@ -56,6 +56,7 @@ rely on the framework’s default behavior.
 ### 13.3 Using transactions in Spring apps
 
 Example app class design:
+
 <img src="images/example_app_class_design.png" width="700" height="500" alt="">\
 (Credits: [Spring Start Here](https://www.manning.com/books/spring-start-here))
 
