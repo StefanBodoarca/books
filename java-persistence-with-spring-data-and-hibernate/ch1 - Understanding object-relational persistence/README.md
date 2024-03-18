@@ -93,7 +93,7 @@ data types such as VARCHAR, BIGINT, and TIMESTAMP.
 <img src="images/inheritance_problem.png" width="600" height="200" alt="">\
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
-What changes must we make to support this updated Java class structure? Can we
+What changes should be done to support this updated Java class structure? Can we
 create a CREDITCARD table that extends BILLINGDETAILS? SQL database products don’t
 generally implement table inheritance (or even data type inheritance), and if they do
 implement it, they don’t follow a standard syntax.
