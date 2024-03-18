@@ -122,6 +122,7 @@ On the other hand, the identity of a database row is expressed as a comparison o
 key values. It’s common for several non-identical
 instances in Java to simultaneously represent the same row of a database, such as in
 concurrently running application threads.
+
 ---
 
 ```jql
