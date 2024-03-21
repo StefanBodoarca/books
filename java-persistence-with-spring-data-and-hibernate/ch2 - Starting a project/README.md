@@ -223,8 +223,7 @@ Check the [HelloWorldSpringDataJPATest.java](ex3-SpringDataJPAExample/src/test/j
 <img src="images/table_2_1_comparison_of_approaches.png" width="600" height="500" alt="">\
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
-For more information on the performance of each approach, see the article “_Object-
-Relational Mapping Using JPA, Hibernate and Spring Data JPA,_” by Cătălin Tudose
+For more information on the performance of each approach, see the article “_Object-Relational Mapping Using JPA, Hibernate and Spring Data JPA,_” by Cătălin Tudose
 and Carmen Odubășteanu (Tudose, 2021).
 
 A batch of insert, update, select and delete operations were executed using the three approaches
