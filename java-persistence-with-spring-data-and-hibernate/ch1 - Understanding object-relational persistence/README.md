@@ -1,4 +1,4 @@
-## Chapter 1 Understanding object/relational persistence
+## Chapter 1 - Understanding object/relational persistence
 
 ### Table of contents
 - [What is persistence?](#11-what-is-persistence)

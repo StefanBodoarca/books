@@ -68,7 +68,7 @@ is to simplify access to both relational and NoSQL databases:
 
 - _Spring Data Commons_: \
 Spring Data Commons, part of the umbrella Spring Data
-project, provides a metadata model for persisting Java classes and technologyneutral
+project, provides a metadata model for persisting Java classes and technology neutral
 repository interfaces.
 
 
@@ -78,7 +78,7 @@ Spring Data JPA deals with the implementation of JPA-based
 
 
 - _Spring Data JDBC_: \
-Spring Data JDBC deals with the implementation of JDBCbased
+Spring Data JDBC deals with the implementation of JDBC based
 repositories. It provides improved support for JDBC-based data access layers.
 It does not offer a series of JPA capabilities, such as caching or lazy loading,
 resulting in a simpler and limited ORM.

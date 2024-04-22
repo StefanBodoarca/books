@@ -1,0 +1,25 @@
+<entity-mappings
+        version="2.2"
+        xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd">
+    <persistence-unit-metadata> <!-- declare the global metadata -->
+        <xml-mapping-metadata-complete/> <!-- ignore all mapping annotations -->
+        <persistence-unit-defaults> <!-- The default settings escape all SQL columns, tables, and other names -->
+            <delimited-identifiers/>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+    <entity class="com.manning.javapersistence.ch03.metadataxmljpa.Item"
+            access="FIELD">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO"/>
+            </id>
+            <basic name="name"/>
+            <basic name="auctionEnd">
+                <temporal>TIMESTAMP</temporal>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>
