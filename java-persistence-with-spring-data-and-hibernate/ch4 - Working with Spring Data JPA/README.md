@@ -2,6 +2,15 @@
 
 ### Table of contents
 
+- [Introducing Spring Data JPA](#41-introducing-spring-data-jpa)
+- [Defining query methods with Spring Data JPA](#44-defining-query-methods-with-spring-data-jpa)
+- [Limiting query results, sorting and paging](#45-limiting-query-results-sorting-and-paging)
+- [Streaming results](#46-streaming-results)
+- [The _@Query_ annotation](#47-the-_query_-annotation)
+- [Projections](#48-projections)
+- [Modifying queries](#49-modifying-queries)
+- [Query by Example](#410-query-by-example)
+
 ### 4.1 Introducing Spring Data JPA
 
 Spring Data JPA provides support for interacting with
