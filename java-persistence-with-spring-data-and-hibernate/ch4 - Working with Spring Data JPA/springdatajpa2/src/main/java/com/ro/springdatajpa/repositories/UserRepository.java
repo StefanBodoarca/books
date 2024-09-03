@@ -71,8 +71,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("update User u set u.level = ?2 where u.level = ?1")
     int updateLevel(int oldLevel, int newLevel);
+    
     @Transactional
     int deleteByLevel(int level);
+    
     @Transactional
     @Modifying
     @Query("delete from User u where u.level = ?1")
