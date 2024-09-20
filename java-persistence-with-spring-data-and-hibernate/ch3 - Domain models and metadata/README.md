@@ -310,7 +310,7 @@ Validator** may call accessor methods, whereas **Hibernate ORM** may call fields
 and annotations. With a custom constraint, you can even use class-level annotations
 and validate several attribute values at the same time on an instance of a class.
 
-[TestModelValidation class](validation/src/test/java/com.ro.TestModelViolation.java) checks the integrity of an _Item_ instance.
+[TestModelValidation class](validation/src/test/java/com/ro/TestModelViolation.java) checks the integrity of an _Item_ instance.
 
 You’ll rarely write this kind of validation code; usually this validation is automatically handled
 by your user interface and persistence framework.
