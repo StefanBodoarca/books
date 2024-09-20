@@ -2,6 +2,17 @@
 
 ### Table of contents
 
+- [Understanding entities and value types](#51-understanding-entities-and-value-types)
+  - [Fine-grained domain models](#511-fine-grained-domain-models)
+  - [Defining application concepts](#512-defining-application-concepts)
+  - [Distinguishing entities and value types](#513-distinguishing-entities-and-value-types)
+- [Mapping entities with identity](#52-mapping-entities-with-identity)
+  - [Understanding Java identity and equality](#521-understanding-java-identity-and-equality)
+  - [A first entity class and mapping](#522-a-first-entity-class-and-mapping)
+  - [Selecting a primary key](#523-selecting-a-primary-key)
+  - [Configuring key generators](#524-configuring-key-generators)
+  - [Identifier generator strategies](#525-identifier-generator-strategies)
+
 ### 5.1 Understanding entities and value types
 
 ### 5.1.1 Fine-grained domain models
@@ -225,3 +236,96 @@ Check [SpringDataJpaApplication class](example-1/src/main/java/com/ro/SpringData
 
 Here you can see the result:
 <img src="images/generic_generator_ids.png" width="550" height="300" alt="">
+
+### 5.2.5 Identifier generator strategies
+
+_Generating identifiers before or after INSERT: what’s the difference?_\
+An ORM service tries to optimize SQL INSERTs, such as by batching several at the
+JDBC level. Hence, SQL execution occurs as late as possible during a unit of work,
+and not when you call entityManager.persist(someItem). This merely queues the
+insertion for later execution and, if possible, assigns the identifier value. However, if
+you now call someItem.getId(), you might get null back if the engine wasn’t able
+to generate an identifier before the INSERT.
+In general, we prefer pre-insert generation strategies that produce identifier values
+independently before INSERT. A common choice is to use a shared and concurrently
+accessible database sequence. Auto-incremented columns, column default values,
+and trigger-generated keys are available only after the INSERT.
+
+Before we discuss the full list of identifier generator strategies, the recommendations
+for these strategies are as follows:
+- In general, prefer pre-insert generation strategies that produce identifier values
+independently before INSERT.
+- Use enhanced-sequence, which uses a native database sequence when that’s
+supported and otherwise falls back to using an extra database table with a single
+column and row, emulating a sequence.
+
+
+Hibernate has been growing
+organically, so there are now two sets of mappings between standard and native strategies;
+we refer to them as old and new in the list. You can switch this mapping with the _hibernate.id.new_generator_mappings_ setting in your persistence.xml file. 
+The default is true, which means the new mapping is used.
+
+
+- **native**—This option automatically selects a strategy, such as sequence or identity,
+depending on the configured SQL dialect. You have to look at the Javadoc
+(or even the source) of the SQL dialect you configured in _persistence.xml_ to
+determine which strategy will be selected. This is equivalent to JPA _Generation-Type.AUTO_ with the old mapping.
+- **sequence**—This strategy uses a native database sequence named _HIBERNATE_SEQUENCE_. 
+The sequence is called before each INSERT of a new row. You can
+customize the sequence name and provide additional DDL settings; see the
+Javadoc for the _org.hibernate.id.SequenceGenerator_ class.
+- **enhanced-sequence**—This strategy uses a native database sequence when it’s
+supported; otherwise it falls back to using an extra database table with a single column
+and row, emulating a sequence (the default table name is _HIBERNATE_SEQUENCE_). 
+Using this strategy always calls the database “sequence” before an
+INSERT, providing the same behavior independently of whether the DBMS supports
+real sequences. This strategy also supports an _org.hibernate.id.enhanced.Optimizer_ 
+to avoid hitting the database before each INSERT, and it defaults to
+no optimization and fetching a new value for each INSERT. This is equivalent
+to JPA _GenerationType.SEQUENCE_ and _GenerationType.AUTO_ with the new
+mapping enabled, and it’s probably your best option of the built-in strategies.
+For all the parameters, see the Javadoc for the _org.hibernate.id.enhanced.SequenceStyleGenerator_ class.
+- **enhanced-table**—This strategy uses an extra table named _HIBERNATE_SEQUENCES_, 
+with one row by default representing the sequence and storing the
+next value. This value is selected and updated when an identifier value has to be
+generated. You can configure this generator to use multiple rows instead: one
+for each generator (see the Javadoc for _org.hibernate.id.enhanced.TableGenerator_). 
+This is equivalent to JPA _GenerationType.TABLE_ with the
+new mapping enabled. It replaces the outdated but similar _org.hibernate.id.MultipleHiLoPerTableGenerator_, 
+which was the old mapping for JPA _GenerationType.TABLE_.
+- **identity**—This strategy supports IDENTITY and auto-increment columns in
+DB2, MySQL, MS SQL Server, and Sybase. The identifier value for the primary
+key column will be generated on the INSERT of a row. It has no options. Unfortunately,
+due to a quirk in Hibernate’s code, you cannot configure this strategy
+in @GenericGenerator. The DDL generation will not include the identity or
+auto-increment option for the primary key column. The only way to use it is
+with JPA _GenerationType.IDENTITY_ and the old or new mapping, making it the
+default for _GenerationType.IDENTITY_.
+- **increment**—At Hibernate startup, this strategy reads the maximum (numeric)
+primary key column value of each entity’s table and increments the value by one
+each time a new row is inserted. This is especially efficient if a non-clustered
+Hibernate application has exclusive access to the database, but don’t use it in any
+other scenario.
+- **select**—With this strategy, Hibernate won’t generate a key value or include the
+primary key column in an INSERT statement. Hibernate expects the DBMS to
+assign a value to the column on insertion (the default value in the schema or
+the value given by a trigger). Hibernate then retrieves the primary key column
+with a SELECT query after insertion. The required parameter is key, naming the
+database identifier property (such as id) for the SELECT. This strategy isn’t very
+efficient and should only be used with old JDBC drivers that can’t return generated
+keys directly.
+- **uuid2**—This strategy produces a unique 128-bit UUID in the application layer.
+This is useful when you need globally unique identifiers across databases (such as
+if you merge data from several distinct production databases in batch runs every
+night into an archive). The UUID can be encoded either as a java.lang.String,
+a byte[16], or a java.util.UUID property in your entity class. This replaces the
+legacy uuid and uuid.hex strategies. You configure it with an _org.hibernate.id.UUIDGenerationStrategy_; 
+see the Javadoc for the _org.hibernate.id.UUIDGenerator_ class for more details.
+- **guid**—This strategy uses a globally unique identifier produced by the database,
+with an SQL function available on Oracle, Ingres, MS SQL Server, and MySQL.
+Hibernate calls the database function before an INSERT. The value maps to a
+java.lang.String identifier property. If you need full control over identifier
+generation, configure the strategy of @GenericGenerator with the fully qualified
+name of a class that implements the _org.hibernate.id.IdentityGenerator_
+interface.
+
