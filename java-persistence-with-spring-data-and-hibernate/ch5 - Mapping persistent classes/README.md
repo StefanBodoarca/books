@@ -329,3 +329,148 @@ generation, configure the strategy of @GenericGenerator with the fully qualified
 name of a class that implements the _org.hibernate.id.IdentityGenerator_
 interface.
 
+### 5.3 Entity-mapping options
+
+### 5.3.1 Controlling names
+
+If you only specify @Entity on
+a persistence-capable class, the default mapped table name will be the same as the
+class name.
+
+You can override the table name with the JPA @Table
+annotation: 
+
+```java
+@Entity
+@Table(name = "USERS")
+public class User {
+// . . .
+}
+```
+
+The _@javax.persistence.Table_ annotation also has _catalog_ and _schema_
+options if your database layout requires these as naming prefixes.
+
+If you really have to, quoting allows you to use reserved SQL names and even work
+with case-sensitive names.
+
+---
+Implementing naming conventions
+
+Suppose that all table names in CaveatEmptor should follow the pattern CE_<table name>.
+You can implement Hibernate’s PhysicalNamingStrategy interface or override an existing
+implementation, as in the following listing.
+
+```java
+public class CENamingStrategy extends PhysicalNamingStrategyStandardImpl {
+  @Override
+  public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
+    return new Identifier("CE_" + name.getText(), name.isQuoted());
+  }
+}
+```
+The overridden toPhysicalTableName() method prepends CE_ to all generated table
+names in your schema.
+
+NOTE: Look at the Javadoc of the PhysicalNamingStrategy interface;
+it offers methods for custom naming of columns, sequences, and other artifacts.
+
+You have to enable the naming strategy implementation.
+
+With Spring Data JPA using Hibernate as a persistence provider, this is done from the
+LocalContainerEntityManagerFactoryBean configuration:
+```java
+properties.put("hibernate.physical_naming_strategy", CENamingStrategy.class.getName());
+```
+
+---
+Naming entities for querying
+
+By default, all entity names are automatically imported into the namespace of the
+query engine. In other words, you can use short class names without a package prefix
+in JPA query strings, which is convenient:
+
+```java
+List<Item> items = em.createQuery("select i from Item i", Item.class).getResultList();
+```
+
+This only works when you have one Item class in your persistence unit. If you add
+another Item class in a different package, you should rename one of them for JPA if
+you want to continue using the short form in queries:
+
+```java
+package my.other.model;
+@javax.persistence.Entity(name = "AuctionItem")
+public class Item {
+// . . .
+}
+```
+
+### 5.3.2 Dynamic SQL generation
+
+By default, Hibernate and Spring Data JPA using Hibernate as a provider create SQL
+statements for each persistent class when the persistence unit is created on startup.
+These statements are simple create, read, update, and delete (CRUD) operations for
+reading a single row, deleting a row, and so on. It’s cheaper to create and cache them
+instead of generating SQL strings every time such a simple query has to be executed at
+runtime. Besides, prepared statement caching at the JDBC level is much more efficient
+if there are fewer statements.
+
+How can Hibernate create an UPDATE statement on startup? After all, the columns
+to be updated aren’t known at this time. The answer is that the generated SQL statement
+updates all columns, and if the value of a particular column isn’t modified, the
+statement sets it to its old value.
+
+In some situations, such as a legacy table with hundreds of columns, where the SQL
+statements will be large for even the simplest operations (such as when only one column
+needs updating), you should disable this startup SQL generation and switch to
+dynamic statements generated at runtime. An extremely large number of entities can
+also influence startup time because Hibernate has to generate all the SQL statements
+for CRUD up front. Memory consumption for this query statement cache will also be
+high if a dozen statements must be cached for thousands of entities. This can be a concern
+in virtual environments with memory limitations or on low-power devices.
+
+To disable the generation of INSERT and UPDATE SQL statements on startup, you
+need to use native Hibernate annotations:
+
+```java
+@Entity
+@org.hibernate.annotations.DynamicInsert
+@org.hibernate.annotations.DynamicUpdate
+public class Item {
+// . . .
+}
+```
+
+By enabling dynamic insertion and updates, you tell Hibernate to produce the SQL
+strings when needed, not up front. The UPDATE will only contain columns with
+updated values, and the INSERT will only contain non-nullable columns.
+
+### 5.3.3 Making an entity immutable
+
+Instances of a particular class may be immutable. For example, in CaveatEmptor, a Bid
+made for an item is immutable. Hence, Hibernate or Spring Data JPA using Hibernate
+as a provider never needs to execute UPDATE statements on the BID table. Hibernate
+can also make a few other optimizations, such as avoiding dirty checking if you map
+an immutable class, as shown in the next example. Here the Bid class is immutable,
+and instances are never modified:
+```java
+@Entity
+@org.hibernate.annotations.Immutable
+public class Bid {
+// . . .
+}
+```
+
+A POJO is immutable if no public setter methods for any properties of the class are
+exposed—all values are set in the constructor. Hibernate or Spring Data JPA using
+Hibernate as a provider should access the fields directly when loading and storing
+instances. We talked about this earlier in this chapter: **if the @Id annotation is on a
+field, Hibernate will access the fields directly, and you are free to design your getter
+and setter methods.** Also, remember that not all frameworks work with POJOs without
+setter methods.
+When you can’t create a view in your database schema, you can map an immutable
+entity class to an SQL SELECT query.
+
+### 5.3.4 Mapping an entity to a subselect
+
