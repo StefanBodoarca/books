@@ -12,6 +12,11 @@
   - [Selecting a primary key](#523-selecting-a-primary-key)
   - [Configuring key generators](#524-configuring-key-generators)
   - [Identifier generator strategies](#525-identifier-generator-strategies)
+- [Entity-mapping options](#53-entity-mapping-options)
+  - [Controlling names](#531-controlling-names)
+  - [Dynamic sql generation](#532-dynamic-sql-generation)
+  - [Making an entity immutable](#533-making-an-entity-immutable)
+  - [Maping an entity to a subselect](#534-mapping-an-entity-to-a-subselect)
 
 ### 5.1 Understanding entities and value types
 
@@ -235,6 +240,7 @@ Check [Item2 class](example-1/src/main/java/com/ro/example2/Item2.java) to see h
 Check [SpringDataJpaApplication class](example-1/src/main/java/com/ro/SpringDataJpaApplication.java) to see how items are saved.
 
 Here you can see the result:
+
 <img src="images/generic_generator_ids.png" width="550" height="300" alt="">
 
 ### 5.2.5 Identifier generator strategies
@@ -357,7 +363,7 @@ with case-sensitive names.
 ---
 Implementing naming conventions
 
-Suppose that all table names in CaveatEmptor should follow the pattern CE_<table name>.
+Suppose that all table names in CaveatEmptor should follow the pattern CE_\<table name>.
 You can implement Hibernate’s PhysicalNamingStrategy interface or override an existing
 implementation, as in the following listing.
 
@@ -462,7 +468,7 @@ public class Bid {
 }
 ```
 
-A POJO is immutable if no public setter methods for any properties of the class are
+A POJO is immutable if no public setter methods for any properties of the class that are
 exposed—all values are set in the constructor. Hibernate or Spring Data JPA using
 Hibernate as a provider should access the fields directly when loading and storing
 instances. We talked about this earlier in this chapter: **if the @Id annotation is on a
@@ -474,3 +480,45 @@ entity class to an SQL SELECT query.
 
 ### 5.3.4 Mapping an entity to a subselect
 
+```java
+
+@Entity
+@org.hibernate.annotations.Immutable
+@org.hibernate.annotations.Subselect(
+    value = "select i.ID as ITEMID, i.NAME as NAME, " +
+            "count(b.ID) as NUMBEROFBIDS " +
+            "from ITEM i left outer join BID b on i.ID = b.ITEM_ID " +
+               "group by i.ID, i.NAME"
+)
+@org.hibernate.annotations.Synchronize({"ITEM", "BID"}) public class ItemBidSummary {
+    @Id
+    private Long itemId;
+    private String name;
+    private long numberOfBids;
+    public ItemBidSummary() {
+    }
+    // Getter methods . . .
+    //  . . .
+}
+```
+
+@org.hibernate.annotations.Synchronize:
+- for the mentioned tables: The framework will know it has to flush modifications of Item and Bid instances before it executes a query against ItemBid- Summary.
+- As there is no @Table annotation on the ItemBid- Summary class, the framework doesn’t know when it must auto-flush before executing a query. The @org.hibernate.annotations.Synchronize annotation indicates that the framework needs to flush the ITEM and BID tables before executing the query.
+
+Using the read-only ItemBidSummary entity class from Hibernate JPA will look like this:
+```java
+TypedQuery<ItemBidSummary> query = em.createQuery("select ibs from ItemBidSummary ibs where ibs.itemId = :id", ItemBidSummary.class);
+ItemBidSummary itemBidSummary = query.setParameter("id", 1000L).getSingleResult();
+```
+
+To use the read-only ItemBidSummary entity class from Spring Data JPA, you’ll first
+need to introduce a new Spring Data repository:
+```java
+public interface ItemBidSummaryRepository extends CrudRepository<ItemBidSummary, Long> {}
+```
+
+The repository will be effectively used like this:
+```java
+Optional<ItemBidSummary> itemBidSummary = itemBidSummaryRepository.findById(1000L);
+```
