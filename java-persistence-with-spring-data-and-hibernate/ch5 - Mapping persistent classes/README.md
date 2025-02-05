@@ -490,7 +490,8 @@ entity class to an SQL SELECT query.
             "from ITEM i left outer join BID b on i.ID = b.ITEM_ID " +
                "group by i.ID, i.NAME"
 )
-@org.hibernate.annotations.Synchronize({"ITEM", "BID"}) public class ItemBidSummary {
+@org.hibernate.annotations.Synchronize({"ITEM", "BID"}) 
+public class ItemBidSummary {
     @Id
     private Long itemId;
     private String name;
