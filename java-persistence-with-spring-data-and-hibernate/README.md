@@ -9,6 +9,7 @@ These notes have been compiled from the book [Java Persistence with Spring Data 
 - [Chapter 2 Starting a project](ch2%20-%20Starting%20a%20project)
 - [Chapter 3 Domain models and metadata](ch3%20-%20Domain%20models%20and%20metadata)
 - [Chapter 4 Working with Spring Data JPA](ch4%20-%20Working%20with%20Spring%20Data%20JPA)
+- [Chapter 5 Mapping persistent classes](ch5%20-%20Mapping%20persistent%20classes)
 
 For more in-depth understanding and detailed explanations, refer to the [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate) book by Cătălin Tudose. This compilation is meant to complement the book and should be used in conjunction with it for a comprehensive learning experience.
 
