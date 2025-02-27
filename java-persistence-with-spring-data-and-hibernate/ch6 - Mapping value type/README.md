@@ -56,3 +56,23 @@ An annotated entity inherits the default from the position of the mandatory @Id 
 For example, if we declare @Id on a field, rather than using a getter method, all other mapping 
 annotations for that entity are expected to be fields. Annotations are not supported on the setter methods.
 
+
+The JPA specification offers the @Access annotation for overriding the default behavior, using the parameters AccessType.FIELD (access through fields)
+and AccessType.PROPERTY (access through getters). When you set @Access on the class or entity level, all properties of the class 
+will be accessed according to the selected strategy. 
+Any other mapping annotations, including the @Id, can be set on either fields or getter methods.
+We can also use the @Access annotation to override the access strategy of individual properties.
+
+### 6.1.3 Using derived properties
+
+The value of a derived property is calculated at runtime by evaluating an SQL expression declared with the @org.hibernate.annotations.Formula annotation.
+
+```java
+@Formula(
+    "CONCAT(SUBSTR(DESCRIPTION, 1, 12), '...')"
+)
+private String shortDescription;
+```
+
+The SQL formulas are evaluated every time the Item entity is retrieved from the database and not at any other time, 
+so the result can become outdated if other properties are modified. The properties never appear in an SQL INSERT or UPDATE, only in SELECTs. Evaluation occurs in the database; the SQL formula is embedded in the SELECT clause when loading the instance.
