@@ -274,3 +274,116 @@ DATE AND TIME TYPES\
 BINARY AND LARGE VALUE TYPES\
 <img src="images/binary_and_large_value_types.png" width="550" height="200" alt="">\
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
+
+- how to work with image, video, audio or clob (character large object - character
+data stored in a separate location than the table only references)
+
+### 6.3.2 Creating custom JPA converters
+
+```java
+@NotNull
+@Convert(converter = MonetaryAmountConverter.class) //custom converters
+@Column(name = "PRICE", length = 63)
+private MonetaryAmount buyNowPrice;
+
+@Converter
+public class MonetaryAmountConverter
+        implements AttributeConverter<MonetaryAmount, String> {
+    @Override
+    public String convertToDatabaseColumn(MonetaryAmount monetaryAmount) {
+        return monetaryAmount.toString();
+    }
+    @Override
+    public MonetaryAmount convertToEntityAttribute(String s) {
+        return MonetaryAmount.fromString(s);
+    }
+}
+```
+
+Converters aren’t limited to custom classes—we can even override Hibernate’s
+built-in type adapters. For example, we could create a custom converter for some or
+even all java.util.Date properties in the domain model.
+
+Some limitations of the JPA converters are as follows:
+- We can’t apply them to identifier or version properties of an entity.
+- We shouldn’t apply a converter on a property mapped with @Enumerated or
+@Temporal because these annotations already declare what kind of conversion
+has to occur. If we want to apply a custom converter for enums or date/time
+properties, we shouldn’t annotate them with @Enumerated or @Temporal.
+
+### 6.3.3 Extending Hibernate with UserTypes
+
+The standardized JPA converters don’t support
+the transformation of values from or to multiple columns. Another limitation of JPA
+converters is integration with the query engine. We can’t write the following query:
+select i from Item i where i.buyNowPrice.amount > 100. Thanks to the converter
+from the previous section, Hibernate knows how to convert a MonetaryAmount to and
+from a string. However, it doesn’t know that MonetaryAmount has an amount attribute,
+so it can’t parse such a query. 
+
+A simple solution would be to map MonetaryAmount as @Embeddable, as you
+saw earlier in this chapter for the Address class (listing 6.13). Each property of
+MonetaryAmount—amount and currency—maps to its respective database column.
+The database admins, however, added a twist to their requirements: because other
+old applications also access the database, we’ll have to convert each amount to a target
+currency before storing it in the database. For example, Item#buyNowPrice should be
+stored in US dollars, and Item#initialPrice should be stored in Euros.
+
+#### The extension points
+
+org.hibernate.usertype package
+
+- _**UserType**_—You can transform values by interacting with the plain JDBC:
+  PreparedStatement (when storing data) and ResultSet (when loading data).
+  By implementing this interface, you can also control how Hibernate caches and
+  dirty-checks values.
+- _**CompositeUserType**_—You can tell Hibernate that the MonetaryAmount component has two properties: amount and currency. You can then reference these
+  properties in queries with dot notation, such as select avg(i.buyNowPrice
+  .amount) from Item i.
+- _**ParameterizedType**_—This provides settings to the adapter in mappings. We
+  could implement this interface for the MonetaryAmount conversion because, in
+  some mappings we’ll want to convert the amount to US dollars and in other
+  mappings to Euros. We’ll only have to write a single adapter and we can then
+  customize its behavior when mapping a property.
+- _**DynamicParameterizedType**_
+- _**EnhancedUserType**_
+- _**UserVersionType**_
+- _**UserCollectionType**_
+
+
+#### USING TYPE DEFINITIONS
+
+```java
+Path: Ch06/mapping-value-types4/src/main/java/com/manning/javapersistence/ch06/converter/package-info.java
+
+@org.hibernate.annotations.TypeDefs({
+ @org.hibernate.annotations.TypeDef(
+ name = "monetary_amount_usd",
+ typeClass = MonetaryAmountUserType.class,
+ parameters = {@Parameter(name = "convertTo", value = "USD")}
+ ),
+ @org.hibernate.annotations.TypeDef(
+ name = "monetary_amount_eur",
+ typeClass = MonetaryAmountUserType.class,
+ parameters = {@Parameter(name = "convertTo", value = "EUR")}
+ )
+})
+
+package com.manning.javapersistence.ch06.converter;
+import org.hibernate.annotations.Parameter;
+```
+
+
+Summary
+- You can map the basic and embedded properties of an entity class.
+- You can override basic mappings, change the name of a mapped column, use
+derived, default, temporal, and enumeration properties, and test them.
+- You can implement embeddable component classes and create fine-grained
+domain models.
+- You can map the properties of several Java classes in a composition, such as
+Address and City, to one entity table.
+- Any JPA provider supports a minimum set of Java-to-SQL type conversions, as
+well as some additional adapters.
+- You can write a custom type converter, as we did for the MonetaryAmount class,
+with the standard JPA extension interfaces. You can also write a low-level
+adapter, as we did with the native Hibernate UserType API
