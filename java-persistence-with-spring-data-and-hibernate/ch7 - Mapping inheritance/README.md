@@ -20,6 +20,7 @@ one table for each concrete class. We can map all the properties of a class, inc
 inherited properties, to columns of a table.
 
 ![img.png](images/img.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 Relying on this implicit polymorphism, we’ll map concrete classes with @Entity, as
@@ -265,6 +266,7 @@ of the SQL schema. This situation changes with the next strategy.
 ### 7.3 Table per class hierarchy
 
 ![img_1.png](images/img_1.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 The value of an extra type discriminator
@@ -389,6 +391,7 @@ subclass itself, along with a primary key that is also a foreign key of the supe
 table.
 
 ![img_2.png](images/img_2.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 If we make an instance of the CreditCard subclass persistent, Hibernate inserts two
@@ -494,6 +497,7 @@ from
 ### 7.5 Mixing inheritance strategies
 
 ![img.png](images/img_3.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 We’ll map the superclass BillingDetails with InheritanceType.SINGLE_TABLE, as
@@ -602,6 +606,7 @@ public class Item {
 ```
 
 ![img_4.png](images/img_4.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 A pitfall to watch out for is embedding a property of an abstract superclass type
@@ -640,6 +645,7 @@ a concrete class.
 ### 7.8 Polymorphic associations
 
 ![img_5.png](images/img_5.png)
+
 (Credits: [Java Persistence with Spring Data and Hibernate](https://www.manning.com/books/java-persistence-with-spring-data-and-hibernate))
 
 ### 7.8.1 Polymorphic many-to-one associations
