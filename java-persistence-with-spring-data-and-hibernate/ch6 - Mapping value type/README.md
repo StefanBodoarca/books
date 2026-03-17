@@ -2,6 +2,23 @@
 
 ### Table of contents
 
+- [Basic properties](#61-basic-properties)
+  - [Overriding basic property defaults](#611-overriding-basic-property-defaults)
+  - [Customizing property access](#612-customizing-property-access)
+  - [Using derived properties](#613-using-derived-properties)
+  - [Transforming column values](#614-transforming-column-values)
+  - [Generated and default property types](#615-generated-and-default-property-types)
+- [Mapping embeddable components](#62-mapping-embeddable-components)
+  - [The database schema](#621-the-database-schema)
+  - [Making classes embeddable](#622-making-classes-embeddable)
+  - [Overriding embedded attributes](#623-overriding-embedded-attributes)
+  - [Mapping nested embedded components](#624-mapping-nested-embedded-components)
+- [Mapping Java and SQL types with converters](#63-mapping-java-and-sql-types-with-converters)
+  - [Built-in types](#631-built-in-types)
+  - [Creating custom JPA converters](#632-creating-custom-jpa-converters)
+  - [Extending Hibernate with UserTypes](#633-extending-hibernate-with-usertypes)
+- [Summary](#summary)
+
 ### 6.1 Basic properties
 
 Rules:

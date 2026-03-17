@@ -2,6 +2,17 @@
 
 ### Table of contents
 
+- [Table per concrete class with implicit polymorphism](#71-table-per-concrete-class-with-implicit-polymorphism)
+- [Table per concrete class with unions](#72-table-per-concrete-class-with-unions)
+- [Table per class hierarchy](#73-table-per-class-hierarchy)
+- [Table per subclass with joins](#74-table-per-subclass-with-joins)
+- [Mixing inheritance strategies](#75-mixing-inheritance-strategies)
+- [Inheritance of embeddable classes](#76-inheritance-of-embeddable-classes)
+- [Choosing a strategy](#77-choosing-a-strategy)
+- [Polymorphic associations](#78-polymorphic-associations)
+  - [Polymorphic many-to-one associations](#781-polymorphic-many-to-one-associations)
+  - [Polymorphic collections](#782-polymorphic-collections) 
+
 ### 7.1 Table per concrete class with implicit polymorphism
 
 We could stick with the simplest approach suggested: use exactly
@@ -250,7 +261,7 @@ So far, the inheritance-mapping strategies we’ve examined don’t require extr
 of the SQL schema. This situation changes with the next strategy.
 
 
-### 7.3 Table per class hierarchy 
+### 7.3 Table per class hierarchy
 
 ![img_1.png](images/img_1.png)
 
