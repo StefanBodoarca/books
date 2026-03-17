@@ -621,8 +621,7 @@ a concrete class.
 ### 7.7 Choosing a strategy
 
 - If you don’t require polymorphic associations or queries, lean toward table-perconcrete
-  class—in other words, if you never or rarely _select bd from Billing-
-  Details bd_, and you have no class that has an association to BillingDetails.
+  class—in other words, if you never or rarely _select bd from BillingDetails bd_, and you have no class that has an association to BillingDetails.
   An explicit UNION-based mapping with InheritanceType.TABLE_PER_CLASS
   should be preferred because (optimized) polymorphic queries and associations
   will be possible later.
