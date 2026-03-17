@@ -586,7 +586,7 @@ public class Item {
 }
 ```
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 A pitfall to watch out for is embedding a property of an abstract superclass type
 (like Measurement) in an entity (like Item). This can never work; the JPA provider
@@ -623,7 +623,7 @@ a concrete class.
 
 ### 7.8 Polymorphic associations
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 ### 7.8.1 Polymorphic many-to-one associations
 
