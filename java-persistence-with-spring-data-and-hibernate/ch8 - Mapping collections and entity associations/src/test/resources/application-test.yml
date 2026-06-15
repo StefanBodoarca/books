@@ -1,0 +1,12 @@
+spring:
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:tc:postgresql:17:///caveat_emptor
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
